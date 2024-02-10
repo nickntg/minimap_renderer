@@ -1,0 +1,1 @@
+python src/render.py --replay "%1" > "%2"

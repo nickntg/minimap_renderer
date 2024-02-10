@@ -104,6 +104,15 @@ class ReplayParser(object):
             # raise error in strict mode
             if self._is_strict_mode:
                 raise
+                
+        json_object = json.dumps(dict(
+            open=replay.engine_data,
+            extra_data=replay.extra_data,
+            hidden=hidden_data,
+            error=error
+        ), cls=DefaultEncoder)
+
+        print(json_object.encode("utf-8"))
 
         return dict(
             open=replay.engine_data,
