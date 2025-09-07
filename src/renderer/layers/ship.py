@@ -71,7 +71,10 @@ class LayerShipBase(LayerBase):
         artillery_comp = self._owner.ship_components["artillery"]
         fire_control_comp = self._owner.ship_components["fireControl"]
         ship_comp = ship["components"]
-        max_dist = ship_comp[artillery_comp]["maxDist"]
+        try:
+            max_dist = ship_comp[artillery_comp]["maxDist"]
+        except KeyError:
+            max_dist = 999999
 
         try:
             max_dist_coef = ship_comp[fire_control_comp]["maxDistCoef"]
@@ -295,7 +298,10 @@ class LayerShipBase(LayerBase):
 
                 for aid, _ in ac.items():
                     abilities = self._abilities[params_id]
-                    index = abilities["id_to_index"][aid]
+                    try:
+                        index = abilities["id_to_index"][aid]
+                    except KeyError:
+                        index = self._abilities["clan"][aid]
                     filename = f"consumable_{index}.png"
                     c_image = self._renderer.resman.load_image(
                         filename,
